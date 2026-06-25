@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --black: #080808;
+  --white: #f0ede8;
+  --yellow: #ffe600;
+  --red: #ff1f1f;
+  --gray-dark: #141414;
+  --gray-mid: #1e1e1e;
+  --gray-light: #2a2a2a;
+  --gray-text: #888;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--black);
+  --color-foreground: var(--white);
+  --color-yellow: var(--yellow);
+  --color-red: var(--red);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-bebas);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--black);
+  color: var(--white);
+  font-family: var(--font-inter), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-bebas), "Impact", "Arial Black", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--yellow);
+}
+
+/* Selection */
+::selection {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+/* Ticket dashed pattern */
+.ticket-dash {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 8px,
+    #ffe600 8px,
+    #ffe600 12px
+  );
+  height: 2px;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 18s linear infinite;
+}
+
+/* Glitch */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translate(-3px, 0); }
+  25% { clip-path: inset(30% 0 50% 0); transform: translate(3px, 0); }
+  50% { clip-path: inset(60% 0 25% 0); transform: translate(-3px, 0); }
+  75% { clip-path: inset(80% 0 5% 0); transform: translate(3px, 0); }
+}
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(90% 0 2% 0); transform: translate(3px, 0); }
+  25% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+  50% { clip-path: inset(45% 0 40% 0); transform: translate(3px, 0); }
+  75% { clip-path: inset(15% 0 75% 0); transform: translate(-3px, 0); }
+}
+
+.glitch-wrapper {
+  position: relative;
+}
+.glitch-wrapper::before,
+.glitch-wrapper::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+.glitch-wrapper:hover::before {
+  color: #ffe600;
+  animation: glitch-1 0.4s steps(1) infinite;
+}
+.glitch-wrapper:hover::after {
+  color: #ff1f1f;
+  animation: glitch-2 0.4s steps(1) infinite;
 }
